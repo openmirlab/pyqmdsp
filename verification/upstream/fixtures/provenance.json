@@ -1,0 +1,37 @@
+{
+  "upstream_revision": "e34a3cc188332ed7c33cd9257ef164de5b587191",
+  "upstream_sources": "pristine; no package patches or binding source linked",
+  "reference_source_inventory": "qm-dsp/build/general/Makefile.inc",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "system": "Linux",
+  "machine": "x86_64",
+  "libc": [
+    "glibc",
+    "2.39"
+  ],
+  "floating_point": "double KissFFT; Release optimization; no fast-math",
+  "random_environment": {
+    "time": 1780000000,
+    "srand_seed": 20260928,
+    "scope": "reference/test processes only"
+  },
+  "fixtures_sha256": {
+    "rhythm": "5158c2e121aac50076cab4ebb1c07229d6a4869576c655f673c0015d75640a4c",
+    "spectral": "62f499b473d73f2d86e5062beec59303f5275e4861e7c386fb4675050ad1b8c3",
+    "utilities": "c4cf5cc46fc06388e7d94c2714c07e4720c6d1132877886673f48396984b53f2",
+    "statistics": "afd6f548badc1017082a7ea2fe2f0f89744ccc3763e8ba014505c9be4792b745"
+  },
+  "drivers_sha256": {
+    "rhythm": "8f4c08f0769b4728a8e32a42201cbd988c1de94e27fcc7d5446a390bf1009043",
+    "spectral": "eb5111693150e5c3e79d4ae690680f4a2c04d9d459a2c629f0883a1dcf5a004c",
+    "utilities": "1d2c60af0f1575da9edaf48d085580b71d97cbc9ce9181aca919186b5b08fa25",
+    "statistics": "3c683951ceb221cb13f8a0a104c7a5575070ff722b9280affc492ce2cb0c1fc1"
+  },
+  "harness_sha256": {
+    "CMakeLists.txt": "0ff175a42d26d4acb712159e1aab993f6d53d0ede97be5bb0732ebd941117cd4",
+    "oracle.h": "bc54173b213b7d9b443c3a3c0e8c4570972065ebb0fbaf546b8a8baaa913cd9c",
+    "fixed_time.c": "3ee24e19017b5ec76172452c76da81abc9a06ce625580c68753eafa0de514514",
+    "f2c_guard.c": "b28130310f13f94c963f11a95df9cd0c302e3f5a86960c9961a3a1d8921bc8c3"
+  },
+  "binding_before_recording": "7ccf97f54b1144d51e767510f6e5c1bf91136230"
+}
