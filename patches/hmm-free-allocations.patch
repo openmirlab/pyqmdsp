@@ -1,0 +1,18 @@
+--- a/hmm/hmm.c
++++ b/hmm/hmm.c
+@@ -131,6 +131,7 @@
+         free(model->a[i]);
+         free(model->mu[i]);
+     }
++    free(model->p0);
+     free(model->a);
+     free(model->mu);
+     for (i = 0; i < model->L; i++) {
+@@ -608,6 +609,7 @@
+ #ifndef HAVE_ATLAS	
+     free(work);
+ #endif
++    free(ipiv);
+     free(a);	
+ }
+ 

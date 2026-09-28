@@ -1,0 +1,21 @@
+--- a/ext/cblas/src/dlamch.c
++++ b/ext/cblas/src/dlamch.c
+@@ -11,6 +11,7 @@
+ */
+ 
+ #include "f2c.h"
++#include <stdio.h>
+ #include "blaswrap.h"
+ 
+ /* Table of constant values */
+@@ -640,9 +641,7 @@
+ /* Comment out this if block if EMIN is ok */
+ 	if (iwarn) {
+ 	    first = TRUE_;
+-	    s_wsfe(&io___58);
+-	    do_fio(&c__1, (char *)&lemin, (ftnlen)sizeof(integer));
+-	    e_wsfe();
++	    fprintf(stderr, "DLAMC2: machine EMIN estimate may be uncertain: %d\n", lemin);
+ 	}
+ /* ** */
+ 

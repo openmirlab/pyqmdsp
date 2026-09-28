@@ -1,0 +1,80 @@
+# Linux wheel builds run on pull requests, main pushes and manual dispatch.
+# macOS/Windows builds live in the separate opt-in wheels-all-platforms.yml.
+# Feature-branch pushes use the PR trigger to avoid duplicate builds.
+name: Wheels
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: recursive
+
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          enable-cache: true
+
+      - run: uv sync --group dev
+
+      - run: uv run ruff check .
+
+      - run: uv run pytest -q
+
+  wheels:
+    name: Build Linux wheels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: recursive
+
+      - uses: astral-sh/setup-uv@v10.2.0
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v4.2.1
+
+      - name: Build sdist and wheel from sdist
+        run: uv build
+
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: wheels-linux
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  native-memory:
+    name: Native memory checks (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: Build instrumented wheel
+        run: >-
+          uv build --python 3.12 --wheel --out-dir asan-wheels
+          -Cbuild-dir=build/asan
+          -Ccmake.define.CMAKE_CXX_FLAGS=-fsanitize=address
+          -Ccmake.define.CMAKE_C_FLAGS=-fsanitize=address
+          -Ccmake.define.CMAKE_SHARED_LINKER_FLAGS=-fsanitize=address
+      - name: Test installed instrumented wheel
+        run: |
+          uv venv .asan-venv --python 3.12
+          uv pip install --python .asan-venv/bin/python asan-wheels/*.whl pytest
+          export LD_PRELOAD="$(gcc -print-file-name=libasan.so):$(g++ -print-file-name=libstdc++.so)"
+          export ASAN_OPTIONS=detect_leaks=0
+          .asan-venv/bin/python -m pytest tests -q
