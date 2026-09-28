@@ -56,6 +56,24 @@ jobs:
           path: dist/*.tar.gz
           if-no-files-found: error
 
+  original-parity:
+    name: Original qm-dsp parity (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@v10.2.0
+      - run: uv sync --python 3.12 --group dev
+      - name: Compare original C++ outputs with public Python APIs
+        run: uv run python verification/upstream/verify.py --output build/upstream-parity-report.json
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: upstream-parity-report
+          path: build/upstream-parity-report.json
+          if-no-files-found: error
+
   native-memory:
     name: Native memory checks (Linux)
     runs-on: ubuntu-latest

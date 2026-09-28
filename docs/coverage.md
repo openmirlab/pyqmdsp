@@ -28,3 +28,12 @@ behavior; it does not assert musical accuracy on arbitrary recordings.
 The package never loads a Vamp plugin. Recorded Vamp beat outputs are historical
 verification data only. Audio fixtures and evaluation dependencies do not ship in
 runtime dependencies.
+
+## Numerical fidelity evidence
+
+API availability and numerical equivalence have separate evidence. The
+[independent upstream harness](../verification/upstream/README.md) builds pristine
+qm-dsp and compares original outputs with public Python calls in all four domains,
+including parameters, history, reset and secondary outputs. Each domain's
+comparison inventory records exercised paths and exclusions. The existing
+mathematical and input-contract tests complement these original-output fixtures.
