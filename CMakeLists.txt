@@ -97,7 +97,8 @@ add_library(qmdsp STATIC
 target_include_directories(qmdsp PUBLIC extern/qm-dsp PRIVATE extern/qm-dsp/hmm extern/qm-dsp/dsp/segmentation extern/qm-dsp/ext/kissfft extern/qm-dsp/ext/kissfft/tools extern/qm-dsp/ext/clapack/include extern/qm-dsp/ext/cblas/include)
 target_compile_definitions(qmdsp PRIVATE kiss_fft_scalar=double NO_BLAS_WRAP ADD_)
 if(WIN32)
-  target_compile_definitions(qmdsp PRIVATE _USE_MATH_DEFINES NOMINMAX)
+  # Public upstream headers use M_PI and are also compiled by the bindings.
+  target_compile_definitions(qmdsp PUBLIC _USE_MATH_DEFINES NOMINMAX)
 else()
   target_compile_definitions(qmdsp PRIVATE USE_PTHREADS)
 endif()
