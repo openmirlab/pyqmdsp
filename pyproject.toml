@@ -1,0 +1,62 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "nanobind>=2.4"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pyqmdsp"
+dynamic = ["version"]
+description = "Direct NumPy bindings for qm-dsp music analysis and DSP"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-2.0-or-later"
+license-files = ["LICENSE", "NOTICE", "licenses/*", "extern/qm-dsp/COPYING", "extern/qm-dsp/ext/kissfft/COPYING"]
+classifiers = ["Private :: Do Not Upload"]
+authors = [{name = "Queen Mary, University of London (qm-dsp)"}]
+maintainers = [{name = "OpenMIRLab", email = "bernie40916@gmail.com"}]
+dependencies = ["numpy>=1.24"]
+
+[project.urls]
+Repository = "https://github.com/openmirlab/pyqmdsp"
+
+[tool.scikit-build]
+wheel.packages = ["src/pyqmdsp"]
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.10"
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+input = "src/pyqmdsp/__about__.py"
+
+[tool.scikit-build.sdist]
+include = ["extern/qm-dsp/**"]
+exclude = ["docs/blueprints/**", "extern/**/.git", "extern/qm-dsp/tests/**", "extern/qm-dsp/build/**"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.9", "build>=1.2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+extend-exclude = ["extern"]
+
+[tool.cibuildwheel]
+build = "cp3{10,11,12,13}-manylinux_x86_64"
+test-requires = ["pytest"]
+test-command = "python -c \"import pyqmdsp; print(pyqmdsp.engine_info())\" && pytest {project}/tests -q"
+
+[tool.cibuildwheel.macos]
+build = "cp3{10,11,12,13}-macosx_*"
+archs = ["arm64", "x86_64"]
+
+[tool.cibuildwheel.windows]
+build = "cp3{10,11,12,13}-win_amd64"
+
+[[tool.cibuildwheel.overrides]]
+select = "*-macosx_x86_64"
+environment = {MACOSX_DEPLOYMENT_TARGET = "10.13"}
+
+[[tool.cibuildwheel.overrides]]
+select = "*-macosx_arm64"
+environment = {MACOSX_DEPLOYMENT_TARGET = "11.0"}

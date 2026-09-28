@@ -1,0 +1,10 @@
+--- a/dsp/segmentation/ClusterMeltSegmenter.cpp
++++ b/dsp/segmentation/ClusterMeltSegmenter.cpp
+@@ -116,6 +116,7 @@
+ {
+     delete window;
+     delete constq;
++    delete mfcc;
+     delete decimator;
+     delete fft;
+ }

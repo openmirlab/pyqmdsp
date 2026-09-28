@@ -1,0 +1,26 @@
+pyqmdsp: direct Python bindings for qm-dsp
+Original binding code Copyright (c) 2026 OpenMIRLab contributors.
+qm-dsp Copyright (c) 2006-2019 Queen Mary, University of London.
+
+Source: https://github.com/c4dm/qm-dsp
+Pinned revision: e34a3cc188332ed7c33cd9257ef164de5b587191
+The submodule remains unmodified. The build applies patches/hmm-free-allocations.patch
+to a build-directory copy, adding two missing free() calls without changing numerics.
+All upstream notices are retained.
+qm-dsp and original bindings: GPL-2.0-or-later (see LICENSE and upstream COPYING).
+Kiss FFT: Mark Borgerding, BSD-3-Clause (extern/qm-dsp/ext/kissfft/COPYING).
+PCA: Fionn Murtagh, from StatLib; upstream records use with permission.
+Polyfit: Allen Miller, David J Taylor and others; upstream records Mozilla
+Public License provenance. The original file's full attribution is retained.
+Bundled BLAS/LAPACK/f2c routines retain their source notices under extern/qm-dsp/ext.
+nanobind: Wenzel Jakob and contributors, BSD-3-Clause (licenses/nanobind-LICENSE).
+
+The Tactus prototype supplied beat-framing and time-conversion compatibility
+with the QM Vamp plugin. Vamp itself is neither included nor required.
+No models or weights are used. Algorithm fidelity does not guarantee musical accuracy.
+
+patches/dlamch-native-warning.patch replaces only the legacy Fortran warning
+output with stderr; numerical calculations are unchanged and libf2c is not required.
+
+patches/segmenter-free-mfcc.patch adds the missing MFCC destructor call to
+ClusterMeltSegmenter. This changes allocation cleanup only.

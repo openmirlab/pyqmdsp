@@ -8,7 +8,10 @@ NB_MODULE(_native, m) {
         d["source_revision"] = "e34a3cc188332ed7c33cd9257ef164de5b587191";
         d["fft"] = "kissfft-double";
         d["fast_math"] = false;
+        d["compiler"] = PYQMDSP_COMPILER;
+        d["patches"] = nb::cast(std::vector<std::string>{
+            "hmm-free-allocations", "dlamch-native-warning", "segmenter-free-mfcc"});
         return d;
     });
-    bind_rhythm(m); bind_spectral(m); bind_utilities(m);
+    bind_rhythm(m); bind_spectral(m); bind_utilities(m); bind_statistics(m);
 }

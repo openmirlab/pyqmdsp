@@ -27,3 +27,5 @@ inline nb::ndarray<nb::numpy, double> array_output(std::vector<double> values) {
 void bind_rhythm(nb::module_ &);
 void bind_spectral(nb::module_ &);
 void bind_utilities(nb::module_ &);
+
+void bind_statistics(nb::module_ &);
