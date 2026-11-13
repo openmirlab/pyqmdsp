@@ -56,6 +56,7 @@ No model weights are involved.
 
 ## Citation
 
+Not applicable: there is no single library-wide upstream paper or BibTeX entry.
 For research using these algorithms, credit [qm-dsp](https://github.com/c4dm/qm-dsp)
 and the relevant original algorithm authors above. The pinned upstream repository
 does not supply a library-wide BibTeX citation; pyqmdsp does not introduce a new
@@ -275,7 +276,7 @@ The bindings preserve qm-dsp's musical limitations: in the recorded comparison,
 onset detection did not beat the alternatives and downbeat detection performed
 poorly. Availability of an API is not a claim that it is the best estimator.
 
-## Development and verification
+## Development
 
 ```bash
 uv sync --group dev
